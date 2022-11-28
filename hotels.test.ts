@@ -142,11 +142,12 @@ describe("GET /hotels/:hotelId", () => {
     const token = await generateValidToken(user);
     const hotel = await createHotelType()
     const rooms = await createRoomType(hotel.id)
-
+    const rooms2 = await createRoomType(hotel.id)
 
 
     const response = await server.get(`/hotels/${hotel.id}`).set("Authorization", `Bearer ${token}`);
     expect(response.status).toEqual(httpStatus.OK);
+    console.log(response.body)
     expect(response.body).toEqual({
       id: hotel.id,
       name: hotel.name,
@@ -162,6 +163,14 @@ describe("GET /hotels/:hotelId", () => {
           createdAt: rooms.createdAt.toISOString(),
           updatedAt: rooms.updatedAt.toISOString()
         },
+        {
+          id: rooms2.id,
+          name: rooms2.name,
+          capacity: rooms2.capacity,
+          hotelId: rooms2.hotelId,
+          createdAt: rooms2.createdAt.toISOString(),
+          updatedAt: rooms2.updatedAt.toISOString()
+        }
       ]
     })
   })
